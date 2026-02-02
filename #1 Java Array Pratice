@@ -1,0 +1,153 @@
+/*Write a Java program that:
+- Declares an array to store grades of 10 students
+- Initializes the array with values: {85, 92, 78, 95, 88, 76, 90, 84, 91, 87}
+- Prints all grades with their index positions
+- Calculates and displays the average grade
+- Shows which students scored above the average
+
+**Expected Output Format:**
+```
+Student 0: 85
+Student 1: 92
+...
+Average Grade: 86.6
+Students above average: 1, 3, 4, 6, 8*/
+public class Main {
+    public static void main(String[] args) {
+        //Scanner input = new Scanner(System.in);
+        int students[] =  {85, 92, 78, 95, 88, 76, 90, 84, 91, 87};
+        double average=0;
+        boolean aboveavg[] = new boolean[10]; 
+        for(int i=0;i<10;i++){
+            average += students[i];
+            aboveavg[i] = false;
+        }
+        average /=10;
+        for(int i =0; i<10;i++){
+            if(students[i] >average){
+                    aboveavg[i] =true;
+            }
+             System.out.println("Student :" + i +" " + students[i]);
+            if(students[i] > average){
+                System.out.println("The student is above average");
+            } else{
+                System.out.println("The student is below average");
+            }
+        }
+        System.out.print("average is " + average);
+        
+    }
+}
+/*Create a program demonstrating ALL valid ways to declare and initialize arrays in Java:
+1. Declaration and creation in separate statements
+2. Declaration and creation in one statement
+3. Using initializer list
+4. Multiple array declarations in one line (correctly and incorrectly)
+5. Arrays of different data types (int, double, String, boolean)
+*/
+public class Main {
+    public static void main(String[] args) {
+       //all valid ways of intialising arrays
+       int[] c1 = new int[12]; // declare as a object
+       // declare in two lines
+        int[] c2;
+        c2 = new int[3]; 
+        //using intiailiser list
+        int [] c3 ={ 1,2,3,4,5};
+        int [] a,b,c; // multiple array declarations in one line correctly
+        int x[],y,z; //only x is an array and y and z are variables
+    }
+}
+
+/*Create a program that:
+- Declares an array `hourlyTemperatures` with 24 elements representing each hour of the day
+- Generates random temperatures between -10 and 40 degrees Celsius
+- Finds and displays:
+  - Highest temperature and at what hour
+  - Lowest temperature and at what hour
+  - Average temperature for the day
+  - How many hours were below freezing (0°C)
+  - How many hours were above 30°C (hot) */
+
+import java.util.Random;
+public class Main {
+    public static void main(String[] args) {
+     int hourlytemp[] ={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
+        Random random = new Random();
+        double temp[]= new double[24];
+        double averagetemp =0;
+        int hoursBelowFreezing=0;
+        int hoursAbove30=0;
+        System.out.println(" Hour     Temperature");
+        for(int i =0;i<24;i++){
+           temp[i]= random.nextInt(40 -(-10) +1) -10;
+           averagetemp +=temp[i];
+           if(temp[i]> 30){
+            hoursAbove30 +=1;
+           }
+           if(temp[i]<0){// increasing count of hours that are below freezing
+            hoursBelowFreezing +=1;
+           }
+           //printing all hours and the random assigned temperatures
+           System.out.println(hourlytemp[i] +" : "+ temp[i] );
+        }
+        //calculating average
+        averagetemp /=24;
+        //printing average and totalhours below freezing and above 30 c
+        System.out.println("The Average Temperature was " +averagetemp);
+        System.out.println("The hours above 30 C were " + hoursAbove30);
+        System.out.println("The hours Below 0 C were " + hoursBelowFreezing);
+        double highestTemp = temp[0]; int highestTempHour =0;
+        double lowestTemp =temp[0]; int lowestTempHour=0;
+        for(int i =0;i<24;i++){ //finding highest temperature and recording its hour
+            if(temp[i]>highestTemp){
+                highestTemp = temp[i];
+                highestTempHour= i;
+            }
+        }
+        System.out.println("The highest Temperature was" + highestTemp + " and the hour was " + highestTempHour);
+        for(int i =0;i<24;i++){//finding lowest temperature and recording its hour
+            if(temp[i]<lowestTemp){
+                lowestTemp = temp[i];
+                lowestTempHour= i;
+            }
+        }
+        System.out.println("The Lowest Temperature was" + lowestTemp + " and the hour was " + lowestTempHour);
+    }
+
+}
+/*Recreate the survey example from the lecture:
+- 40 students rate food quality on a scale of 1-10
+- Store responses in an array
+- Create a frequency array to count how many students gave each rating
+- Display results in a histogram format using asterisks
+- Calculate:
+  - Most common rating (mode)
+  - Percentage of students who rated 7 or above
+  - Percentage of students who rated 4 or below*/
+
+import java.text.DecimalFormat;
+import java.util.Random;
+public class Main {
+    public static void main(String[] args) {
+    int[] ratings ={1,3,5,6,7,8,9,9,7,7,6,6,5,3,6,10,1,2,3,4,5,7,8,7,6,9,9,9,5,8};//total ratings
+    int[] frequency =new int[11];
+     for(int answer =0; answer<ratings.length ;answer++){//counting frequency of each rating
+        ++frequency[ratings[answer]];
+     }
+     int greatestFreq =0;
+     DecimalFormat df = new DecimalFormat("#0.00");
+
+     for(int i=1; i<frequency.length ;i++){
+        double percentage = (double) frequency[i]/ratings.length *100;
+        String formattedPercentage = df.format(percentage);
+        System.out.println("Rating "+ (i) + " (Students " +frequency[i] +" ," + formattedPercentage+" %)" );//printing all frequency of each ratings
+        if(frequency[i] > greatestFreq){//findind the greatest frequency rating
+            greatestFreq=i;
+        }
+     }
+     System.out.print("The most repetitive rating was " + greatestFreq);
+    }
+
+}
+
